@@ -21,3 +21,20 @@ Feature: Events
 		Then publisher A receives a match "event/1" for pattern "event/[a-z0-9]"
 			And publisher A receives a match "event/2" for pattern "event/[a-z0-9]"
 			And publisher A does not receive a match "weather" for pattern "event/[a-z0-9]"
+
+#	Scenario: A publisher which listen, unlisten and listen again
+#
+#		When publisher A listens to an event with pattern "event/[a-z0-9]"
+#			And publisher A accepts a match "event/1" for pattern "event/[a-z0-9]"
+#			And subscriber X subscribes to an event named "event/1"
+#
+#		Then publisher A receives a match "event/1" for pattern "event/[a-z0-9]"
+#			And publisher A does not receive a match "weather" for pattern "event/[a-z0-9]"
+#
+#		When publisher A unlistens to the pattern "event/[a-z0-9]"
+#			And publisher A listens to an event with pattern "event/[a-z0-9]" again
+#			And publisher A accepts a match "event/1" for pattern "event/[a-z0-9]"
+#
+#		Then publisher A receives a match "event/1" for pattern "event/[a-z0-9]"
+#			And publisher A does not receive a match "weather" for pattern "event/[a-z0-9]"
+#
