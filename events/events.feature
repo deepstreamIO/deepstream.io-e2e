@@ -32,3 +32,5 @@ Scenario: Events
 	# Only client 2 recieved the event
 	Then client 1 recieved no event named "event1"
 		And client 2 received the event "event1" with data "someOtherData"
+
+	Then the servers are stopped
