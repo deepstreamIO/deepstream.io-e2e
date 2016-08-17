@@ -1,8 +1,7 @@
 @events
-Feature: Events
+Feature: Event publishing and subscribing
 	Events are deepstream's publish-subscribe
 	pattern.
-
 
 	Background:
 		Given publisher A connects to server 1
@@ -10,7 +9,7 @@ Feature: Events
 			And subscriber X connects to server 2
 			And subscriber X logs in with username "user" and password "pass"
 
-	Scenario: Events
+	Scenario: Publish to a subscriber at the pubisher itself
 		Given publisher A subscribes to an event named "event1"
 			And subscriber X subscribes to an event named "event1"
 
