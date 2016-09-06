@@ -21,5 +21,5 @@ Feature: Event publishing and subscribing
 		When publisher A unsubscribes from an event named "event1"
 			And publisher A publishes an event named "event1" with data "someOtherData"
 
-		Then publisher A recieved no event named "event1"
+		Then publisher A received no event named "event1"
 			But subscriber X received the event "event1" with data "someOtherData"
