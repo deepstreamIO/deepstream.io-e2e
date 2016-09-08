@@ -4,14 +4,10 @@ Feature: Event publishing and subscribing
   pattern.
 
   Background:
-    Given client A connects to server 1
-      And client A logs in with username "user" and password "pass"
-      And client B connects to server 1
-      And client B logs in with username "user" and password "pass"
-      And client C connects to server 2
-      And client C logs in with username "user" and password "pass"
-      And client D connects to server 3
-      And client D logs in with username "user" and password "pass"
+    Given client A connects and logs into server 1
+      And client B connects and logs into server 1
+      And client C connects and logs into server 2
+      And client D connects and logs into server 3
 
   Scenario: Clients receive events they are subscribed to
     Given client B subscribes to an event named "event1"
