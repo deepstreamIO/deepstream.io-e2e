@@ -12,19 +12,46 @@ Feature: RPC providing and calling on single + across multiple nodes
 
     When client A calls the RPC "addTwo" with arguments { "numA": 1, "numB": 2 }
     Then client A receives a response for RPC "addTwo" with data 3
+      And client A's RPC "addTwo" is called once
 
     When client B calls the RPC "addTwo" with arguments { "numA": 3, "numB": 7 }
     Then client B receives a response for RPC "addTwo" with data 10
+      And client A's RPC "addTwo" is called once
 
     When client C calls the RPC "addTwo" with arguments { "numA": 14, "numB": 35 }
     Then client C receives a response for RPC "addTwo" with data 49
+      And client A's RPC "addTwo" is called once
 
-    #When client D calls the RPC "addTwo" with arguments { "numA": "red", "numB": "rum" }
-    #Then client D receives a response for RPC "addTwo" with data "redrum"
+    When client D calls the RPC "addTwo" with arguments { "numA": "red", "numB": "rum" }
+    Then client D receives a response for RPC "addTwo" with data "redrum"
+      And client A's RPC "addTwo" is called once
 
   Scenario: When the only provider of an RPC rejects, give an error
-    Given client A provides the RPC "wontWork"
+    Given client A provides the RPC "alwaysReject"
 
-    When client B calls the RPC "wontWork" with arguments { "bill": 1, "ben": 2 }
+    When client B calls the RPC "alwaysReject" with arguments { "bill": 1, "ben": 2 }
 
-    Then client B receives a response for RPC "wontWork" with error "NO_RPC_PROVIDER"
+    Then client B receives a response for RPC "alwaysReject" with error "NO_RPC_PROVIDER"
+      And client A's RPC "alwaysReject" is called once
+
+  Scenario: When local and remote providers exist, the local one is chosen
+    Given client B provides the RPC "addTwo"
+      And client C provides the RPC "addTwo"
+      And client D provides the RPC "addTwo"
+
+    When client A calls the RPC "addTwo" with arguments { "numA": 15, "numB": 10 }
+
+    Then client A receives a response for RPC "addTwo" with data 25
+      And client B's RPC "addTwo" is called once
+      And client C's RPC "addTwo" is never called
+      And client D's RPC "addTwo" is never called
+
+  Scenario: When a provider rejects an RPC but another exists, it is rerouted to the other provider
+    Given client B provides the RPC "clientBRejects"
+      And client C provides the RPC "clientBRejects"
+
+    When client A calls the RPC "clientBRejects" with argument { "root": 3 }
+
+    Then client A receives a response for RPC "clientBRejects" with data 9
+      And client B's RPC "clientBRejects" is called once
+      And client C's RPC "clientBRejects" is called once
