@@ -34,6 +34,17 @@ Feature: RPC providing and calling on single + across multiple nodes
     Then client B receives a response for RPC "alwaysReject" with error "NO_RPC_PROVIDER"
       And client A's RPC "alwaysReject" is called once
 
+  Scenario: When all providers of an RPC reject, give an error
+    Given all clients provide the RPC "alwaysReject"
+
+    When client A calls the RPC "alwaysReject" with arguments { }
+
+    Then client A receives a response for RPC "alwaysReject" with error "NO_RPC_PROVIDER"
+      And client A's RPC "alwaysReject" is called once
+      And client B's RPC "alwaysReject" is called once
+      And client C's RPC "alwaysReject" is called once
+      And client D's RPC "alwaysReject" is called once
+
   Scenario: When local and remote providers exist, the local one is chosen
     Given client B provides the RPC "addTwo"
       And client C provides the RPC "addTwo"
@@ -46,7 +57,7 @@ Feature: RPC providing and calling on single + across multiple nodes
       And client C's RPC "addTwo" is never called
       And client D's RPC "addTwo" is never called
 
-  Scenario: When a provider rejects an RPC but another exists, it is rerouted to the other provider
+  Scenario: When a local provider rejects an RPC but a remote provider exists, the RPC is rerouted
     Given client B provides the RPC "clientBRejects"
       And client C provides the RPC "clientBRejects"
 
@@ -55,3 +66,15 @@ Feature: RPC providing and calling on single + across multiple nodes
     Then client A receives a response for RPC "clientBRejects" with data 9
       And client B's RPC "clientBRejects" is called once
       And client C's RPC "clientBRejects" is called once
+
+  Scenario: If the only provider of an RPC stops providing, calls should be rejected
+    Given client A provides the RPC "addTwo"
+
+    When client D calls the RPC "addTwo" with arguments { "numA": 93, "numB": 7 }
+    Then client D receives a response for RPC "addTwo" with data 100
+      And client A's RPC "addTwo" is called once
+
+    When client A unprovides the RPC "addTwo"
+      And client D calls the RPC "addTwo" with arguments { "numA": 93, "numB": 7 }
+    Then client D receives a response for RPC "addTwo" with error "NO_RPC_PROVIDER"
+      And client A's RPC "addTwo" is never called
