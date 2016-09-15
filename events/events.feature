@@ -41,7 +41,7 @@ Feature: Event publishing and subscribing
     When client A unsubscribes from an event named "event3"
       And client A publishes an event named "event3" with data "someOtherData"
 
-    Then client A receives no event named "event3"
+    Then client A receives no event "event3"
       But client B receives the event "event3" with data "someOtherData"
 
   Scenario: Multiple events are received by all subscribers
