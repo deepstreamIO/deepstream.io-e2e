@@ -28,7 +28,7 @@ Feature: Record Permissions
     When client B sets the record "public-read-private-write/A" path "firstname" with data 'Not Elton =('
 
     Then client A doesn't recieve an update for record "public-read-private-write/A"
-      And client B receives R error "MESSAGE_DENIED"
+      And client B receives "RECORD" error "MESSAGE_DENIED"
 
   Scenario: Referencing old and new data
     Given client A gets the record "only-increment"
@@ -39,7 +39,7 @@ Feature: Record Permissions
 
       And client A sets the record "only-increment" with data '{"value": 2}'
 
-    Then client A receives R error "MESSAGE_DENIED"
+    Then client A receives "RECORD" error "MESSAGE_DENIED"
 
   Scenario: Delete rules based on multiple path paramenters
     Given client A gets the record "only-delete-egon-miller/Egon/fisher"
@@ -47,13 +47,13 @@ Feature: Record Permissions
       And client A gets the record "only-delete-egon-miller/Egon/miller"
 
     When client A deletes record "only-delete-egon-miller/Egon/fisher"
-    Then client A receives R error "MESSAGE_DENIED"
+    Then client A receives "RECORD" error "MESSAGE_DENIED"
 
     When client A deletes record "only-delete-egon-miller/Egon/miller"
     Then client A gets notified of record "only-delete-egon-miller/Egon/miller" getting deleted
 
     When client A deletes record "only-delete-egon-miller/mike/fisher"
-    Then client A receives R error "MESSAGE_DENIED"
+    Then client A receives "RECORD" error "MESSAGE_DENIED"
 
   Scenario: It can cross reference another record in a permission and only allows transaction for things in stock
     Given client A gets the record "item/a"
@@ -67,9 +67,9 @@ Feature: Record Permissions
 
     When client A gets the record "only-allows-purchase-of-products-in-stock/pb"
       And client A sets the record "only-allows-purchase-of-products-in-stock/pb" with data '{"itemId": "b", "customer":"mike"}'
-    Then client A receives R error "MESSAGE_DENIED"
+    Then client A receives "RECORD" error "MESSAGE_DENIED"
 
     When client A sets the record "item/a" with data '{"stock": 0}'
       And client A gets the record "only-allows-purchase-of-products-in-stock/pc"
       And client A sets the record "only-allows-purchase-of-products-in-stock/pc" with data '{"itemId": "a", "customer":"mike"}'
-    Then client A receives R error "MESSAGE_DENIED"
+    Then client A receives "RECORD" error "MESSAGE_DENIED"
