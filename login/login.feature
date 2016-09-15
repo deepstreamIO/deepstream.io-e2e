@@ -13,7 +13,7 @@ Feature: Login and authorisation to deepstream
 
     When client A attempts to login with username "userA" and password "abcdefgh"
     Then client A receives no login response
-      And client A receives X error IS_CLOSED
+      And client A receives "ERROR" error "IS_CLOSED"
 
   Scenario: If username is invalid, an error is thrown
     Given client A connects to server 1
@@ -26,7 +26,7 @@ Feature: Login and authorisation to deepstream
 
     When client A attempts to login with username "userA" and password "abcdefgh"
     Then client A receives no login response
-      And client A receives X error IS_CLOSED
+      And client A receives "ERROR" error "IS_CLOSED"
 
   Scenario: Client receives correct clientData upon successful login
     Given client B connects to server 1

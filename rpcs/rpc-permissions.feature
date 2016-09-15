@@ -18,7 +18,7 @@ Feature: RPC providing and calling on single + across multiple nodes
 
   Scenario: Denies b to provide
     Given client B provides the RPC "a-provide-b-request"
-    Then client B receives P error "MESSAGE_DENIED"
+    Then client B receives "RPC" error "MESSAGE_DENIED"
 
   Scenario: Denies a to call
     Given client A calls the RPC "a-provide-b-request" with arguments 7

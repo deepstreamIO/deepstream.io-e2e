@@ -17,8 +17,8 @@ Feature: Event publishing and subscribing
     Given client A subscribes to an event named "forbidden/some-event"
     When client B publishes an event named "forbidden/some-event" with data 44
 
-    Then client A receives E error "MESSAGE_DENIED"
-      And client B receives E error "MESSAGE_DENIED"
+    Then client A receives "EVENT" error "MESSAGE_DENIED"
+      And client B receives "EVENT" error "MESSAGE_DENIED"
 
   Scenario: Allows only subscribing or publishing
     Given client B subscribes to an event named "a-to-b/some-event"
@@ -28,12 +28,12 @@ Feature: Event publishing and subscribing
   Scenario: Prevents only subscribing or publishing
     Given client A subscribes to an event named "a-to-b/some-event"
     When client B publishes an event named "a-to-b/some-event" with data "someData"
-    Then client A receives E error "MESSAGE_DENIED"
-      And client B receives E error "MESSAGE_DENIED"
+    Then client A receives "EVENT" error "MESSAGE_DENIED"
+      And client B receives "EVENT" error "MESSAGE_DENIED"
 
   Scenario: Prevents news about regular pigs
     When client A publishes an event named "news/regular-pigs"
-    Then client A receives E error "MESSAGE_DENIED"
+    Then client A receives "EVENT" error "MESSAGE_DENIED"
 
   Scenario: Allows news about tea cup pigs
     When client A publishes an event named "news/tea-cup-pigs"
@@ -41,7 +41,7 @@ Feature: Event publishing and subscribing
 
   Scenario: Does not allow numbers less than 10
     When client A publishes an event named "number"
-    Then client A receives E error "MESSAGE_DENIED"
+    Then client A receives "EVENT" error "MESSAGE_DENIED"
 
   Scenario: Allows numbers greater than 10
     When client A publishes an event named "number" with data "12"
@@ -53,4 +53,4 @@ Feature: Event publishing and subscribing
 
   Scenario: Prevents places in berlin
     When client A publishes an event named "place/munich" with data { "address": {"city": "Berlin"} }
-    Then client A receives E error "MESSAGE_DENIED"
+    Then client A receives "EVENT" error "MESSAGE_DENIED"
