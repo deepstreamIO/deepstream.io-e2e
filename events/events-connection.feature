@@ -14,7 +14,7 @@ Feature: Events Connectivity
       And client D connects and logs into server 3
 
   Scenario: All subscriptions should be resumed after servers restart
-    Given all clients subscribe to an event named "bob"
+    Given all clients subscribe to an event "bob"
 
     When server 1 goes down
       And server 2 goes down
@@ -23,19 +23,19 @@ Feature: Events Connectivity
       And server 2 comes back up
       And server 3 comes back up
 
-    Then all clients receive at least one "connection" error "connection_error"
+    Then all clients receive at least one "CONNECTION" error "CONNECTION_ERROR"
 
-    When client A publishes an event named "bob"
+    When client A publishes an event "bob"
     Then all clients receive the event "bob"
 
   Scenario: Server restarts
-    Given all clients subscribe to an event named "eve"
+    Given all clients subscribe to an event "eve"
 
-    When client A publishes an event named "eve"
+    When client A publishes an event "eve"
     Then all clients receive the event "eve"
 
     When server 1 goes down
-      And client A publishes an event named "eve"
+      And client A publishes an event "eve"
 
     Then client A receives the event "eve"
       But client B receives no event "eve"
