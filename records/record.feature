@@ -10,49 +10,49 @@ Feature: Record
       And client A sets the record "record" with data '{ "user": { "firstname": "John" } }'
 
   Scenario: Maintains a local copy of the record
-    Then all clients record "record" path "user.firstname" value is 'John'
+    Then all clients have record "record" with path "user.firstname" and data 'John'
 
   Scenario: Settings a records path
-    When client A sets the record "record" path "user.firstname" with data 'Bob'
-    Then all clients record "record" path "user.firstname" value is 'Bob'
+    When client A sets the record "record" and path "user.firstname" with data 'Bob'
+    Then all clients have record "record" with path "user.firstname" and data 'Bob'
 
   Scenario: Subscribes to full record
     Given all clients subscribe to record "record" with immediate flag
-    Then all clients recieve an update for record "record" with data '{ "user": { "firstname": "John" } }'
+    Then all clients receive an update for record "record" with data '{ "user": { "firstname": "John" } }'
 
-    When client A sets the record "record" path "user.firstname" with data 'Dave'
+    When client A sets the record "record" and path "user.firstname" with data 'Dave'
 
-    Then all clients recieve an update for record "record" with data '{ "user": { "firstname": "Dave" } }'
+    Then all clients receive an update for record "record" with data '{ "user": { "firstname": "Dave" } }'
 
   Scenario: Subscribes to record path
     Given all clients subscribe to record "record" with path "user.firstname" with immediate flag
-    Then all clients recieve an update for record "record" and path "user.firstname" with data 'John'
+    Then all clients receive an update for record "record" and path "user.firstname" with data 'John'
 
-    When client A sets the record "record" path "user.firstname" with data 'Dave'
+    When client A sets the record "record" and path "user.firstname" with data 'Dave'
 
-    Then all clients recieve an update for record "record" and path "user.firstname" with data 'Dave'
+    Then all clients receive an update for record "record" and path "user.firstname" with data 'Dave'
 
   Scenario: Subscribes and unsubscribes
     Given all clients subscribe to record "record" with path "pets[2]"
 
-    When client A sets the record "record" path "pets[2]" with data 'Samoyed'
-    Then all clients recieve an update for record "record" and path "pets[2]" with data 'Samoyed'
+    When client A sets the record "record" and path "pets[2]" with data 'Samoyed'
+    Then all clients receive an update for record "record" and path "pets[2]" with data 'Samoyed'
 
     When all clients unsubscribe to record "record" with path "pets[2]"
-      And client B sets the record "record" path "pets[2]" with data 'Guineapig'
+      And client B sets the record "record" and path "pets[2]" with data 'Guineapig'
 
-    Then all clients don't recieve an update for record "record" and path "pets[2]"
+    Then all clients don't receive an update for record "record" and path "pets[2]"
 
   Scenario: Subscribes and Discards
     Given all clients subscribe to record "record" with path "city"
 
-    When client A sets the record "record" path "city" with data 'Berlin'
-    Then all clients recieve an update for record "record" and path "city" with data 'Berlin'
+    When client A sets the record "record" and path "city" with data 'Berlin'
+    Then all clients receive an update for record "record" and path "city" with data 'Berlin'
 
     When client A discards record "record"
-      And client B sets the record "record" path "city" with data 'Dresden'
+      And client B sets the record "record" and path "city" with data 'Dresden'
 
-    Then clients A record "record" path "city" value is 'Berlin'
+    Then clients A has record "record" with path "city" and data 'Berlin'
 
   Scenario: Creates and discards twice in a row
     When client A discards record "record"

@@ -4,14 +4,14 @@ Feature: Record Anonymous Feature
   Background:
     Given client A connects and logs into server 1
       And client A gets the record "recordA"
-      And client A sets the record "recordA" path "pet" with data 'Hamster'
+      And client A sets the record "recordA" and path "pet" with data 'Hamster'
       And client A gets the record "recordB"
-      And client A sets the record "recordB" path "pet" with data 'Pug'
+      And client A sets the record "recordB" and path "pet" with data 'Pug'
       And client A gets a anonymous record
 
   Scenario: Can switch underlying records
     When client A sets the underlying record to "recordA" on the anonymous record
-    Then client A anoynmous record value is '{ "pet": "Hamster" }'
+    Then client A anonymous record data is '{ "pet": "Hamster" }'
 
     When client A sets the underlying record to "recordB" on the anonymous record
-    Then client A anoynmous record value is '{ "pet": "Pug" }'
+    Then client A's anonymous record data is '{ "pet": "Pug" }'

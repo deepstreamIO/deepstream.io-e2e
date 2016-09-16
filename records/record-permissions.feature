@@ -10,24 +10,24 @@ Feature: Record Permissions
     Given client A gets the record "public/rec1"
       And client B gets the record "public/rec1"
       And client B subscribes to record "public/rec1" with path "firstname"
-    When client A sets the record "public/rec1" path "firstname" with data 'Elton'
-    Then client B recieves an update for record "public/rec1" and path "firstname" with data 'Elton'
+    When client A sets the record "public/rec1" and path "firstname" with data 'Elton'
+    Then client B receives an update for record "public/rec1" and path "firstname" with data 'Elton'
 
   Scenario: Sucessfully updates record where A is only permissioned author
     Given client A gets the record "public-read-private-write/A"
       And client B gets the record "public-read-private-write/A"
       And client B subscribes to record "public-read-private-write/A" with path "firstname"
-    When client A sets the record "public-read-private-write/A" path "firstname" with data 'Elton'
-    Then client B recieves an update for record "public-read-private-write/A" and path "firstname" with data 'Elton'
+    When client A sets the record "public-read-private-write/A" and path "firstname" with data 'Elton'
+    Then client B receives an update for record "public-read-private-write/A" and path "firstname" with data 'Elton'
 
   Scenario: Denies updates from client B on record where A is only permissioned author
     Given client A gets the record "public-read-private-write/A"
       And client B gets the record "public-read-private-write/A"
       And client A subscribes to record "public-read-private-write/A"
 
-    When client B sets the record "public-read-private-write/A" path "firstname" with data 'Not Elton =('
+    When client B sets the record "public-read-private-write/A" and path "firstname" with data 'Not Elton =('
 
-    Then client A doesn't recieve an update for record "public-read-private-write/A"
+    Then client A doesn't receive an update for record "public-read-private-write/A"
       And client B receives "RECORD" error "MESSAGE_DENIED"
 
   Scenario: Referencing old and new data
