@@ -1,25 +1,47 @@
 @events
 Feature: Event publishing and subscribing
-	Events are deepstream's publish-subscribe
-	pattern.
+  Events are deepstream's publish-subscribe
+  pattern.
 
-	Background:
-		Given publisher A connects to server 1
-			And publisher A logs in with username "user" and password "pass"
-			And subscriber X connects to server 2
-			And subscriber X logs in with username "user" and password "pass"
+  Background:
+    Given client A connects and logs into server 1
+      And client B connects and logs into server 1
+      And client C connects and logs into server 2
+      And client D connects and logs into server 3
 
-	Scenario: Publish to a subscriber at the pubisher itself
-		Given publisher A subscribes to an event named "event1"
-			And subscriber X subscribes to an event named "event1"
+  Scenario: Clients receive events they are subscribed to
+    Given all clients subscribe to an event "event1"
 
-		When subscriber X publishes an event named "event1" with data "someData"
+    When client A publishes an event "event1" with data "someData"
 
-		Then publisher A received the event "event1" with data "someData"
-			And subscriber X received the event "event1" with data "someData"
+    Then all clients receives the event "event1" with data "someData"
 
-		When publisher A unsubscribes from an event named "event1"
-			And publisher A publishes an event named "event1" with data "someOtherData"
+  Scenario: Client subscribes and unsubscribes
+    Given client A subscribes to an event "event3"
+      And client B subscribes to an event "event3"
 
-		Then publisher A recieved no event named "event1"
-			But subscriber X received the event "event1" with data "someOtherData"
+    When client B publishes an event "event3" with data {"an": "object"}
+
+    Then client A receives the event "event3" with data {"an": "object"}
+      And client B receives the event "event3" with data {"an": "object"}
+
+    When client A unsubscribes from an event "event3"
+      And client A publishes an event "event3" with data "someOtherData"
+
+    Then client A receives no event "event3"
+      But client B receives the event "event3" with data "someOtherData"
+
+  Scenario: Multiple events are received by all subscribers
+    Given all clients subscribe to an event "event4"
+
+    When client A publishes an event "event4" with data 100
+    Then all clients receive the event "event4" with data 100
+
+    When client B publishes an event "event4" with data 101
+    Then all clients receive the event "event4" with data 101
+
+    When client C publishes an event "event4" with data 102
+    Then all clients receive the event "event4" with data 102
+
+    When client D publishes an event "event4" with data 103
+    Then all clients receive the event "event4" with data 103
