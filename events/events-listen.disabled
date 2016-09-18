@@ -71,6 +71,9 @@ Feature: Event Listening
 		When server 2 goes down
 			And server 2 comes back up
 
+		Then publisher C receives at least one "CONNECTION" error "CONNECTION_ERROR"
+      		And subscriber 2 receives at least one "CONNECTION" error "CONNECTION_ERROR"
+
 		# This requires message connectors to disconnect properly to pass
 		#Then publisher C receives 3 event matches "another-event" for pattern "another-event"
 

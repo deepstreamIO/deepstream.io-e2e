@@ -37,6 +37,7 @@ Feature: RPC providing and calling on single + across multiple nodes
   Scenario: When all providers of an RPC reject, give an error
     Given all clients provide the RPC "alwaysReject"
 
+
     When client A calls the RPC "alwaysReject" with arguments { }
 
     Then client A receives a response for RPC "alwaysReject" with error "NO_RPC_PROVIDER"
