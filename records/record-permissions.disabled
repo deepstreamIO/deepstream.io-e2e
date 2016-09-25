@@ -7,11 +7,11 @@ Feature: Record Permissions
       And client B connects and logs into server 1
 
   Scenario: Successfully creates and updates a public record
-    Given client A gets the record "public/rec1"
-      And client B gets the record "public/rec1"
-      And client B subscribes to record "public/rec1" with path "firstname"
-    When client A sets the record "public/rec1" and path "firstname" with data 'Elton'
-    Then client B receives an update for record "public/rec1" and path "firstname" with data 'Elton'
+    Given client A gets the record "public/recordOne"
+      And client B gets the record "public/recordOne"
+      And client B subscribes to record "public/recordOne" with path "firstname"
+    When client A sets the record "public/recordOne" and path "firstname" with data 'Elton'
+    Then client B receives an update for record "public/recordOne" and path "firstname" with data 'Elton'
 
   Scenario: Sucessfully updates record where A is only permissioned author
     Given client A gets the record "public-read-private-write/A"

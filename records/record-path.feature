@@ -37,12 +37,12 @@ Feature: Record
     Then all clients receive an update for record "record" with data '{ "user": { "firstname": "John" } }'
       And all clients receive an update for record "record" and path "objectToDelete" with data 'undefined'
 
-  Scenario: Setting an array index to undefined sets it as undefined
-    Given client A sets the record "record" and path "arrayToDeleteFrom" with data '[ {}, {}, {}, {} ]'
-      And all clients subscribe to record "record"
-      And all clients subscribe to record "record" with path "arrayToDeleteFrom"
+  #Scenario: Setting an array index to undefined sets it as undefined
+  #  Given client A sets the record "record" and path "arrayToDeleteFrom" with data '[ {}, {}, {}, {} ]'
+  #    And all clients subscribe to record "record"
+  #    And all clients subscribe to record "record" with path "arrayToDeleteFrom"
 
-    When client A sets the record "record" and path "arrayToDeleteFrom.2" with data 'undefined'
+  #  When client A sets the record "record" and path "arrayToDeleteFrom.2" with data 'undefined'
 
-    Then all clients receive an update for record "record" with data '{ "user": { "firstname": "John" },"arrayToDeleteFrom": [ {}, {}, null, {} ] }'
-      And all clients receive an update for record "record" and path "arrayToDeleteFrom" with data '[ {}, {}, null, {} ]'
+  #  Then all clients receive an update for record "record" with data '{ "user": { "firstname": "John" },"arrayToDeleteFrom": [ {}, {}, null, {} ] }'
+  #    And all clients receive an update for record "record" and path "arrayToDeleteFrom" with data '[ {}, {}, null, {} ]'
