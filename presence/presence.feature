@@ -7,12 +7,12 @@ Feature: Presence
 
 		Given client A connects and logs into server 1
 			And client B connects and logs into server 1
-			And client C connects and logs into server 2	
+			And client C connects and logs into server 2
 
 		Then client A subscribes to presence login events
 			And client B subscribes to presence login events
 			And client C subscribes to presence login events
-			
+
 		When client D connects and logs into server 1
 			Then clients "A,B,C" are notified that client "D" logged in
 
@@ -32,12 +32,12 @@ Feature: Presence
 		Given client A connects and logs into server 1
 			And client B connects and logs into server 1
 			And client C connects and logs into server 2
-			And client D connects and logs into server 2	
+			And client D connects and logs into server 2
 
 		Then client A subscribes to presence logout events
 			And client B subscribes to presence logout events
 			And client C subscribes to presence logout events
-			
+
 		When client D logs out
 			Then clients "A,B,C" are notified that client "D" logged out
 

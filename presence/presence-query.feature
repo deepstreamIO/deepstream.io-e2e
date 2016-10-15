@@ -19,6 +19,6 @@ Feature: Presence querying
 
         Given client B logs out
             And client C logs out
-        
+
         When client A queries for connected clients
             Then client A is notified that no clients are connected
