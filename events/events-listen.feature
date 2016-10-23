@@ -156,9 +156,8 @@ Feature: Event Listening
 		Then publisher A receives 1 event match "event/1" for pattern "event/[a-z0-9]"
 			And publisher B receives 1 event match "event/1" for pattern "event/.*"
 			# Can't guarantee C receives it since it could ask D first
-			And publisher C receives 1 event match "event/1" for pattern "event/[0-9]"
+			#And publisher C receives 1 event match "event/1" for pattern "event/[0-9]"
 			And publisher D receives 1 event match "event/1" for pattern "event/[0-9]"
-
 
 	Scenario: A single publisher on a different server as the subscriber
 
