@@ -52,7 +52,7 @@ Feature: Record
     When client A discards record "record"
       And client B sets the record "record" and path "city" with data 'Dresden'
 
-    Then clients A has record "record" with path "city" and data 'Berlin'
+    Then client A has record "record" with path "city" and data 'Berlin'
 
   Scenario: Creates and discards twice in a row
     When client A discards record "record"
