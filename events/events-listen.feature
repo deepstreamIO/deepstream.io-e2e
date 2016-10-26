@@ -1,4 +1,4 @@
-@events
+@events @listening
 Feature: Event Listening
 	Events Listen are deepstream's active publish-subscribe
 	providers.
