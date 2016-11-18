@@ -9,9 +9,9 @@ Feature: Presence
 			And client B connects and logs into server 1
 			And client C connects and logs into server 2
 
-		Then client A subscribes to presence login events
-			And client B subscribes to presence login events
-			And client C subscribes to presence login events
+		Then client A subscribes to presence events
+			And client B subscribes to presence events
+			And client C subscribes to presence events
 
 		When client D connects and logs into server 1
 			Then clients "A,B,C" are notified that client "D" logged in
@@ -19,7 +19,7 @@ Feature: Presence
 	Scenario: Client is notified of multiple logins from other servers
 
 		Given client A connects and logs into server 1
-			And client A subscribes to presence login events
+			And client A subscribes to presence events
 
 		When client B connects and logs into server 1
 			And client C connects and logs into server 2
@@ -34,9 +34,9 @@ Feature: Presence
 			And client C connects and logs into server 2
 			And client D connects and logs into server 2
 
-		Then client A subscribes to presence logout events
-			And client B subscribes to presence logout events
-			And client C subscribes to presence logout events
+		Then client A subscribes to presence events
+			And client B subscribes to presence events
+			And client C subscribes to presence events
 
 		When client D logs out
 			Then clients "A,B,C" are notified that client "D" logged out
@@ -44,7 +44,7 @@ Feature: Presence
 	Scenario: Client is notified of multiple logouts from other servers
 
 		Given client A connects and logs into server 1
-			And client A subscribes to presence logout events
+			And client A subscribes to presence events
 			And client B connects and logs into server 1
 			And client C connects and logs into server 2
 			And client OPEN connects and logs into server 2
