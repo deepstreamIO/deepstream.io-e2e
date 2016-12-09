@@ -1,5 +1,5 @@
 @records
-Feature: Record
+Feature: Record write acknowledgement
 
   Background:
     Given client A connects and logs into server 1
