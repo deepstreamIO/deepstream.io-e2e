@@ -17,3 +17,6 @@ Feature: Record write acknowledgement
     When client B sets the record "record" and path "user.firstname" with data 'Charlie'
     Then client B is told that the record "record" was set without error
     Then all clients have record "record" with path "user.firstname" and data 'Charlie'
+
+  Scenario: Version conflict still receives acknowledgement
+    
