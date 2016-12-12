@@ -18,5 +18,18 @@ Feature: Record write acknowledgement
     Then client B is told that the record "record" was set without error
     Then all clients have record "record" with path "user.firstname" and data 'Charlie'
 
-  Scenario: Version conflict still receives acknowledgement
-    
+  Scenario: Connection goes down and clients are notified of write failure immediately
+    Given server 1 goes down
+    When client A sets the record "record" and path "user.firstname" with data 'Jeff'
+      Then client A is told that the record "record" experienced error "Connection error: error updating record as connection was closed" while setting
+
+    When server 1 comes back up
+      Then all clients have record "record" with path "user.firstname" and data 'Jeff'
+
+    Then client A is told that the record "record" was set without error
+      And all clients have record "record" with path "user.firstname" and data 'Jeff'
+
+    Then client A receives at least one "CONNECTION" error "CONNECTION_ERROR"
+      And client B receives at least one "CONNECTION" error "CONNECTION_ERROR" 
+
+  
