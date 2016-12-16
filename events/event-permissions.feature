@@ -1,4 +1,4 @@
-@events
+@events @permissions
 Feature: Event publishing and subscribing
   Events are deepstream's publish-subscribe
   pattern.

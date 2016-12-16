@@ -1,4 +1,4 @@
-@rpcs
+@rpcs @permissions
 Feature: RPC providing and calling on single + across multiple nodes
 
   Background:

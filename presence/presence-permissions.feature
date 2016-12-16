@@ -1,4 +1,4 @@
-@presence
+@presence @permissions
 Feature: Presence Permissions
 
   Background:

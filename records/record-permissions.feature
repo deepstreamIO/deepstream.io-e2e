@@ -1,4 +1,4 @@
-@records
+@records @permissions
 Feature: Record Permissions
 
   Background:
