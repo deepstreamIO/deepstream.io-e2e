@@ -1,4 +1,4 @@
-@events
+@records @records-connectivity
 Feature: Record Connectivity
 
   Background:
