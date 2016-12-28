@@ -73,3 +73,10 @@ Feature: Record Permissions
       And client A gets the record "only-allows-purchase-of-products-in-stock/pc"
       And client A sets the record "only-allows-purchase-of-products-in-stock/pc" with data '{"itemId": "a", "customer":"mike"}'
     Then client A receives "RECORD" error "MESSAGE_DENIED"
+
+  Scenario: It can cross reference both create and read
+    Given client A gets the record "perm/JohnDoe"
+      And client A sets the record "perm/JohnDoe" with data '{"boolean": true}'
+
+    When client A gets the record "d/u101"
+    # Then no errors
