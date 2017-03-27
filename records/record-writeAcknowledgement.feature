@@ -18,6 +18,7 @@ Feature: Record write acknowledgement
     Then client B is told that the record "writeRecord" was set without error
     Then all clients have record "writeRecord" with path "user.firstname" and data 'Charlie'
 
+  @write-acks-unhappy
   Scenario: Connection goes down and clients are notified of write failure immediately
     Given server 1 goes down
     When client A sets the record "writeRecord" and path "user.firstname" with data 'Jeff'
@@ -28,6 +29,6 @@ Feature: Record write acknowledgement
       And all clients have record "writeRecord" with path "user.firstname" and data 'Jeff'
 
     Then client A receives at least one "CONNECTION" error "CONNECTION_ERROR"
-      And client B receives at least one "CONNECTION" error "CONNECTION_ERROR" 
+      And client B receives at least one "CONNECTION" error "CONNECTION_ERROR"
 
-  
+
