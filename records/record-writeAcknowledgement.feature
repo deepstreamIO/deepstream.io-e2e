@@ -25,7 +25,6 @@ Feature: Record write acknowledgement
       Then client A is told that the record "writeRecord" experienced error "Connection error: error updating record as connection was closed" while setting
 
     When server 1 comes back up
-      Then client A is told that the record "writeRecord" was set without error
       And all clients have record "writeRecord" with path "user.firstname" and data 'Jeff'
 
     Then client A receives at least one "CONNECTION" error "CONNECTION_ERROR"
