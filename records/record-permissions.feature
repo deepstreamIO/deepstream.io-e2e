@@ -74,6 +74,15 @@ Feature: Record Permissions
       And client A sets the record "only-allows-purchase-of-products-in-stock/pc" with data '{"itemId": "a", "customer":"mike"}'
     Then client A receives "RECORD" error "MESSAGE_DENIED"
 
+  Scenario: It correctly permissions creates
+    Given client B gets the record "only-a-can-read-and-create"
+      And client B receives "RECORD" error "MESSAGE_DENIED"
+
+  Scenario: It correctly permissions reads
+    Given client A gets the record "only-a-can-read-and-create"
+      When client B gets the record "only-a-can-read-and-create"
+      And client B receives "RECORD" error "MESSAGE_DENIED"
+
   Scenario: It can cross reference both create and read
     Given client A gets the record "perm/JohnDoe"
       And client A sets the record "perm/JohnDoe" with data '{"boolean": true}'
