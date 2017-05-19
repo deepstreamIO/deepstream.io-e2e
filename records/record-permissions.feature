@@ -83,6 +83,27 @@ Feature: Record Permissions
       When client B gets the record "only-a-can-read-and-create"
       And client B receives "RECORD" error "MESSAGE_DENIED"
 
+  Scenario: Client tries to create but is denied, after created they are able to read
+    Given client A gets the record "ab-read-b-create"
+      Then client A receives "RECORD" error "MESSAGE_DENIED"
+      # need to address this as part of issue #247
+      And client A logs out
+      And client A connects and logs into server 1
+
+    When client B gets the record "ab-read-b-create"
+      And client A gets the record "ab-read-b-create"
+      And client B sets the record "ab-read-b-create" with data '{"stock": 3}'
+      Then client A has record "ab-read-b-create" with data '{"stock": 3}'
+
+  Scenario: client is able to create and then not read
+    Given client A gets the record "create-but-not-read"
+      # need to address this as part of issue #247
+      And client A logs out
+      And client A connects and logs into server 1
+
+    When client A gets the record "create-but-not-read"
+      Then client A receives "RECORD" error "MESSAGE_DENIED"
+
   Scenario: It can cross reference both create and read
     Given client A gets the record "perm/JohnDoe"
       And client A sets the record "perm/JohnDoe" with data '{"boolean": true}'
