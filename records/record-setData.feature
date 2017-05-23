@@ -26,3 +26,8 @@ Feature: Clients able to set data of a record without being subscribed to it
       And clients B,C,D get the record "not-yet-existant"
       Then clients B,C,D have record "not-yet-existant" with path "user.firstname" and data 'Alex'
 
+  Scenario: Able to set record when subscribed
+    Given client A gets the record "subscribed-record"
+      When client A sets the record "subscribed-record" without being subscribed with data '{ "user": { "firstname": "Alex" } }'
+      And clients B,C,D get the record "subscribed-record"
+      Then all clients have record "subscribed-record" with path "user.firstname" and data 'Alex'
