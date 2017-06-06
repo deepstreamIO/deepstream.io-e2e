@@ -61,3 +61,14 @@ Feature: Record
     When client A gets the record "record"
       And client A discards record "record"
       Then client A gets notified of record "record" getting discarded
+
+  Scenario: Deletes a record
+    When client A deletes record "record"
+
+    Then all clients get notified of record "record" getting deleted
+
+  Scenario: Deletes a record then creates it again
+    When client A deletes record "record"
+      And all clients get the record "record"
+
+    Then all clients have record "record" with data '{}'
