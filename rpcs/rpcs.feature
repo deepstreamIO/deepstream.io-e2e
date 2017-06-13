@@ -45,6 +45,14 @@ Feature: RPC providing and calling on single + across multiple nodes
       And client C's RPC "alwaysReject" is called once
       And client D's RPC "alwaysReject" is called once
 
+  Scenario: When the only provider of an RPC never responsds, give an error
+    Given client A provides the RPC "neverRespond"
+
+    When client B calls the RPC "neverRespond" with arguments {}
+
+    Then client B receives a response for RPC "neverRespond" with error "RESPONSE_TIMEOUT"
+      And client A's RPC "neverRespond" is called once
+
   Scenario: When local and remote providers exist, the local one is chosen
     Given client B provides the RPC "addTwo"
       And client C provides the RPC "addTwo"
