@@ -31,3 +31,8 @@ Feature: Clients able to set data of a record without being subscribed to it
       When client A sets the record "subscribed-record" without being subscribed with data '{ "user": { "firstname": "Alex" } }'
       And clients B,C,D get the record "subscribed-record"
       Then all clients have record "subscribed-record" with path "user.firstname" and data 'Alex'
+
+  Scenario: Able to create record and then write to it via CU
+    When client A sets the record "double-write" without being subscribed with data '{ "user": { "firstname": "Alex" } }'
+      And client A sets the record "double-write" without being subscribed with data '{ "user": { "firstname": "Ben" } }'
+      Then client A received no errors
