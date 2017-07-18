@@ -37,6 +37,7 @@ Feature: Event Listening
 
 		Then publisher D removed 1 event match "event/1" for pattern "event/.*"
 
+	@cluster
 	Scenario: A long scenario that does lots of random stuff
 
 		When publisher A listens to an event with pattern "event/[a-z0-9]"

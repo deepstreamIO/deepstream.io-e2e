@@ -18,7 +18,7 @@ Feature: Record write acknowledgement
     Then client B is told that the record "writeRecord" was set without error
     Then all clients have record "writeRecord" with path "user.firstname" and data 'Charlie'
 
-  @write-acks-unhappy
+  @write-acks-unhappy @cluster
   Scenario: Connection goes down and clients are notified of write failure immediately
     Given server 1 goes down
     When client A sets the record "writeRecord" and path "user.firstname" with data 'Jeff'

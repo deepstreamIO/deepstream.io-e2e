@@ -53,6 +53,7 @@ Feature: RPC providing and calling on single + across multiple nodes
     Then client B receives a response for RPC "neverRespond" with error "RESPONSE_TIMEOUT"
       And client A's RPC "neverRespond" is called once
 
+  @cluster
   Scenario: When local and remote providers exist, the local one is chosen
     Given client B provides the RPC "addTwo"
       And client C provides the RPC "addTwo"
@@ -65,6 +66,7 @@ Feature: RPC providing and calling on single + across multiple nodes
       And client C's RPC "addTwo" is never called
       And client D's RPC "addTwo" is never called
 
+  @cluster
   Scenario: When a local provider rejects an RPC but a remote provider exists, the RPC is rerouted
     Given client B provides the RPC "clientBRejects"
       And client C provides the RPC "clientBRejects"

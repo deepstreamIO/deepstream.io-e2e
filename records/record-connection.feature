@@ -27,6 +27,7 @@ Feature: Record Connectivity
     Then all clients receive at least one "CONNECTION" error "CONNECTION_ERROR"
       And all clients have record "record" with path "user.firstname" and data 'Bob'
 
+  @cluster
   Scenario: Remote wins by default
     When server 1 goes down
       And client A sets the record "record" and path "user.firstname" with data 'Mike'
