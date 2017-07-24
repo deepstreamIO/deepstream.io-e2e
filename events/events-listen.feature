@@ -14,45 +14,45 @@ Feature: Event Listening
 			And subscriber 3 connects and logs into server 3
 
 	Scenario: Provider that is also a subscriber on a single node
-		When publisher A listens to an event with pattern "event/.*"
-			And publisher A accepts an event match "event/1" for pattern "event/.*"
+		When publisher A listens to an event with pattern "event/*"
+			And publisher A accepts an event match "event/1" for pattern "event/*"
 			And subscriber 1 subscribes to an event "event/1"
 
-		Then publisher A receives 1 event match "event/1" for pattern "event/.*"
+		Then publisher A receives 1 event match "event/1" for pattern "event/*"
 
 		When publisher A subscribes to an event "event/1"
 			And subscriber 1 unsubscribes from an event "event/1"
 
-		Then publisher A removed 1 event match "event/1" for pattern "event/.*"
+		Then publisher A removed 1 event match "event/1" for pattern "event/*"
 
 	Scenario: Provider that is also a subscriber on a cluster
-		When publisher D listens to an event with pattern "event/.*"
-			And publisher D accepts an event match "event/1" for pattern "event/.*"
+		When publisher D listens to an event with pattern "event/*"
+			And publisher D accepts an event match "event/1" for pattern "event/*"
 			And subscriber 1 subscribes to an event "event/1"
 
-		Then publisher D receives 1 event match "event/1" for pattern "event/.*"
+		Then publisher D receives 1 event match "event/1" for pattern "event/*"
 
 		When publisher D subscribes to an event "event/1"
 			And subscriber 1 unsubscribes from an event "event/1"
 
-		Then publisher D removed 1 event match "event/1" for pattern "event/.*"
+		Then publisher D removed 1 event match "event/1" for pattern "event/*"
 
 	@cluster
 	Scenario: A long scenario that does lots of random stuff
 
 		When publisher A listens to an event with pattern "event/[a-z0-9]"
-			And publisher D listens to an event with pattern "event/.*"
+			And publisher D listens to an event with pattern "event/*"
 
 		When publisher A accepts an event match "event/1" for pattern "event/[a-z0-9]"
 			And subscriber 1 subscribes to an event "event/1"
 		Then publisher A receives 1 event match "event/1" for pattern "event/[a-z0-9]"
-		Then publisher D receives 0 event match "event/1" for pattern "event/.*"
+		Then publisher D receives 0 event match "event/1" for pattern "event/*"
 
 		When publisher A rejects an event match "event/2" for pattern "event/[a-z0-9]"
-			And publisher D accepts an event match "event/2" for pattern "event/.*"
+			And publisher D accepts an event match "event/2" for pattern "event/*"
 			And subscriber 3 subscribes to an event "event/2"
 		Then publisher A receives 0 event match "event/2" for pattern "event/[a-z0-9]"
-		Then publisher D receives 1 event match "event/2" for pattern "event/.*"
+		Then publisher D receives 1 event match "event/2" for pattern "event/*"
 
 		When publisher C listens to an event with pattern "another-event"
 			And publisher C accepts an event match "another-event" for pattern "another-event"
@@ -110,52 +110,52 @@ Feature: Event Listening
 	Scenario: Two publishers, first rejects and second accepts
 
 		When publisher A listens to an event with pattern "event/[a-z0-9]"
-			And publisher B listens to an event with pattern "event/.*"
+			And publisher B listens to an event with pattern "event/*"
 			And publisher A rejects an event match "event/1" for pattern "event/[a-z0-9]"
-			And publisher B accepts an event match "event/1" for pattern "event/.*"
+			And publisher B accepts an event match "event/1" for pattern "event/*"
 			And subscriber 1 subscribes to an event "event/1"
 
 		Then publisher A receives 1 event match "event/1" for pattern "event/[a-z0-9]"
-			And publisher B receives 1 event match "event/1" for pattern "event/.*"
+			And publisher B receives 1 event match "event/1" for pattern "event/*"
 
 	Scenario: Two publishers, first accepts, second gets nothing
 
 		When publisher A listens to an event with pattern "event/[a-z0-9]"
-			And publisher B listens to an event with pattern "event/.*"
+			And publisher B listens to an event with pattern "event/*"
 			And publisher A accepts an event match "event/1" for pattern "event/[a-z0-9]"
 			And subscriber 1 subscribes to an event "event/1"
 
 		Then publisher A receives 1 event match "event/1" for pattern "event/[a-z0-9]"
-			And publisher B does not receive a event match "event/1" for pattern "event/.*"
+			And publisher B does not receive a event match "event/1" for pattern "event/*"
 
 	Scenario: Three publishers, first two rejects, third accepts
 
 		When publisher A listens to an event with pattern "event/[a-z0-9]"
-			And publisher B listens to an event with pattern "event/.*"
+			And publisher B listens to an event with pattern "event/*"
 			And publisher C listens to an event with pattern "event/[0-9]"
 			And publisher A rejects an event match "event/1" for pattern "event/[a-z0-9]"
-			And publisher B rejects an event match "event/1" for pattern "event/.*"
+			And publisher B rejects an event match "event/1" for pattern "event/*"
 			And publisher C accepts an event match "event/1" for pattern "event/[0-9]"
 			And subscriber 1 subscribes to an event "event/1"
 
 		Then publisher A receives 1 event match "event/1" for pattern "event/[a-z0-9]"
-			And publisher B receives 1 event match "event/1" for pattern "event/.*"
+			And publisher B receives 1 event match "event/1" for pattern "event/*"
 			And publisher C receives 1 event match "event/1" for pattern "event/[0-9]"
 
 	Scenario: Four publishers, first three rejects, third accepts
 
 		When publisher A listens to an event with pattern "event/[a-z0-9]"
-			And publisher B listens to an event with pattern "event/.*"
+			And publisher B listens to an event with pattern "event/*"
 			And publisher C listens to an event with pattern "event/[0-9]"
 			And publisher D listens to an event with pattern "event/[0-9]"
 			And publisher A rejects an event match "event/1" for pattern "event/[a-z0-9]"
-			And publisher B rejects an event match "event/1" for pattern "event/.*"
+			And publisher B rejects an event match "event/1" for pattern "event/*"
 			And publisher C rejects an event match "event/1" for pattern "event/[0-9]"
 			And publisher D accepts an event match "event/1" for pattern "event/[0-9]"
 			And subscriber 1 subscribes to an event "event/1"
 
 		Then publisher A receives 1 event match "event/1" for pattern "event/[a-z0-9]"
-			And publisher B receives 1 event match "event/1" for pattern "event/.*"
+			And publisher B receives 1 event match "event/1" for pattern "event/*"
 			# Can't guarantee C receives it since it could ask D first
 			#And publisher C receives 1 event match "event/1" for pattern "event/[0-9]"
 			And publisher D receives 1 event match "event/1" for pattern "event/[0-9]"
@@ -172,14 +172,14 @@ Feature: Event Listening
 	Scenario: Two publishers, first accepts, unlistens and then second accepts
 
 		When publisher A listens to an event with pattern "event/[a-z0-9]"
-			And publisher D listens to an event with pattern "event/.*"
+			And publisher D listens to an event with pattern "event/*"
 			And publisher A accepts an event match "event/1" for pattern "event/[a-z0-9]"
-			And publisher D accepts an event match "event/1" for pattern "event/.*"
+			And publisher D accepts an event match "event/1" for pattern "event/*"
 			And subscriber 1 subscribes to an event "event/1"
 
 		Then publisher A receives 1 event match "event/1" for pattern "event/[a-z0-9]"
-			And publisher D does not receive a event match "event/1" for pattern "event/.*"
+			And publisher D does not receive a event match "event/1" for pattern "event/*"
 
 		When publisher A unlistens to the event pattern "event/[a-z0-9]"
 
-		Then publisher D receives 1 event match "event/1" for pattern "event/.*"
+		Then publisher D receives 1 event match "event/1" for pattern "event/*"
