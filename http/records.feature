@@ -23,6 +23,13 @@ Feature: Interact with records via the HTTP APIs
 
     Then client A has record "new-record" with data '{ "x": { "y": "z" } }'
 
+  Scenario: Creating a record with array data
+    When client B queues a write to record "new-record" with data '["x", "y", "z"]'
+      And client B flushes their http queue
+      And client A gets the record "new-record"
+
+    Then client A has record "new-record" with data '["x", "y", "z"]'
+
   Scenario: Updating a record
     Given client A gets the record "update-record"
       And client A sets the record "update-record" with data '{ "stale": true }'
