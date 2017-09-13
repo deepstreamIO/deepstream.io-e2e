@@ -54,3 +54,19 @@ Feature: Event publishing and subscribing
   Scenario: Prevents places in berlin
     When client A publishes an event "place/munich" with data { "address": {"city": "Berlin"} }
     Then client A receives "EVENT" error "MESSAGE_DENIED"
+
+  Scenario: Asserts user roles using server data
+    Given clients C,D connect to server 1
+      And client C logs in with username "userA" and password "abcdefgh"
+      And client D logs in with username "userB" and password "123456789"
+
+    When clients C,D subscribe to an event "admin-publish"
+    Then clients C,D received no errors
+
+    When client C publishes an event "admin-publish"
+    Then client C receives "EVENT" error "MESSAGE_DENIED"
+      And client C receives the event "admin-publish"
+      And client D receives no event "admin-publish"
+
+    When client D publishes an event "admin-publish"
+    Then clients C,D receive the event "admin-publish"
