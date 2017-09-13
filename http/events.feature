@@ -7,7 +7,15 @@ Feature: Interacting with events via the http APIs
       And client A authenticates with http server 2
       And client B authenticates with http server 2
 
-  Scenario: emit an event
+  Scenario: emit an event without data
+    Given client W subscribes to the event "emit_event"
+
+    When client A queues an event "emit_event"
+      And client A flushes their http queue
+
+    Then client W receives the event "emit_event"
+
+  Scenario: emit an event with data
     Given client W subscribes to the event "emit_event"
 
     When client A queues an event "emit_event" with data { "x": "my_data" }

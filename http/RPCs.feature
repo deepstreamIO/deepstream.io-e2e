@@ -5,7 +5,15 @@ Feature: Interact with RPCs via the HTTP APIs
     Given client A connects and logs into server 1
       And client B authenticates with http server 2
 
-  Scenario: Use the HTTP api to make an RPC
+  Scenario: make an RPC without data
+    Given client A provides the RPC "stringify"
+
+    When client B queues an RPC call to "stringify"
+      And client B flushes their http queue
+
+    Then client B receives an RPC response with data "undefined"
+
+  Scenario: make an RPC with data
     Given client A provides the RPC "addTwo"
 
     When client B queues an RPC call to "addTwo" with arguments { "numA": 1, "numB": 2 }
