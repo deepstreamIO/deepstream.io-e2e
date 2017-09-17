@@ -20,6 +20,7 @@ Feature: Event publishing and subscribing
     Then client A receives "EVENT" error "MESSAGE_DENIED"
       And client B receives "EVENT" error "MESSAGE_DENIED"
 
+
   Scenario: Allows only subscribing or publishing
     Given client B subscribes to an event "a-to-b/some-event"
     When client A publishes an event "a-to-b/some-event" with data "someData"

@@ -1,5 +1,5 @@
 @records
-Feature: Record Anonymous Feature
+Feature: Record Lists
 
   Background:
     Given client A connects and logs into server 1

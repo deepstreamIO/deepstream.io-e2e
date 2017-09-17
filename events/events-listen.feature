@@ -4,15 +4,13 @@ Feature: Event Listening
 	providers.
 
 	Background:
-		Given publisher A connects and logs into server 1
-			And publisher B connects and logs into server 1
+		Given publisher A,B connects and logs into server 1
 			And publisher C connects and logs into server 2
 			And publisher D connects and logs into server 3
 
 			And subscriber 1 connects and logs into server 1
 			And subscriber 2 connects and logs into server 2
 			And subscriber 3 connects and logs into server 3
-
 	Scenario: Provider that is also a subscriber on a single node
 		When publisher A listens to an event with pattern "event/.*"
 			And publisher A accepts an event match "event/1" for pattern "event/.*"
@@ -24,7 +22,7 @@ Feature: Event Listening
 			And subscriber 1 unsubscribes from an event "event/1"
 
 		Then publisher A removed 1 event match "event/1" for pattern "event/.*"
-
+	
 	Scenario: Provider that is also a subscriber on a cluster
 		When publisher D listens to an event with pattern "event/.*"
 			And publisher D accepts an event match "event/1" for pattern "event/.*"
@@ -56,24 +54,25 @@ Feature: Event Listening
 
 		When publisher C listens to an event with pattern "another-event"
 			And publisher C accepts an event match "another-event" for pattern "another-event"
-			And subscriber 3 subscribes to an event "another-event"
+		
+		When subscriber 3 subscribes to an event "another-event"
 		Then publisher C receives 1 event match "another-event" for pattern "another-event"
 
 		When subscriber 2 subscribes to an event "another-event"
 		Then publisher C receives 1 event match "another-event" for pattern "another-event"
 
-		When subscriber 2 unsubscribes from an event "another-event"
-			And subscriber 3 unsubscribes from an event "another-event"
-		Then publisher C removed 1 event match "another-event" for pattern "another-event"
+		# When subscriber 2 unsubscribes from an event "another-event"
+		# 	And subscriber 3 unsubscribes from an event "another-event"
+		# Then publisher C removed 1 event match "another-event" for pattern "another-event*"
 
-		When subscriber 1 subscribes to an event "another-event"
-		Then publisher C receives 2 event matches "another-event" for pattern "another-event"
+		# When subscriber 1 subscribes to an event "another-event"
+		# Then publisher C receives 2 event matches "another-event" for pattern "another-event*"
 
-		When server 2 goes down
-			And server 2 comes back up
+		# When server 2 goes down
+		# 	And server 2 comes back up
 
-		Then publisher C receives at least one "CONNECTION" error "CONNECTION_ERROR"
-      		And subscriber 2 receives at least one "CONNECTION" error "CONNECTION_ERROR"
+		# Then publisher C receives at least one "CONNECTION" error "CONNECTION_ERROR"
+  #     		And subscriber 2 receives at least one "CONNECTION" error "CONNECTION_ERROR"
 
 		# This requires message connectors to disconnect properly to pass
 		#Then publisher C receives 3 event matches "another-event" for pattern "another-event"
