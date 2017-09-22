@@ -56,7 +56,7 @@ Feature: Event publishing and subscribing
     Then client A receives "EVENT" error "MESSAGE_DENIED"
 
   Scenario: Asserts user roles using server data
-    Given clients C,D connect to server 1
+    Given clients C,D connects to server 1
       And client C logs in with username "userA" and password "abcdefgh"
       And client D logs in with username "userB" and password "123456789"
 
