@@ -4,8 +4,7 @@ Feature: Event Listening
 	providers.
 
 	Background:
-		Given publisher A connects and logs into server 1
-			And publisher B connects and logs into server 1
+		Given publisher A,B connects and logs into server 1
 			And publisher C connects and logs into server 2
 			And publisher D connects and logs into server 3
 
@@ -16,19 +15,18 @@ Feature: Event Listening
 	@cluster
 	Scenario: A long scenario that does lots of random stuff
 
-		When publisher A listens to an event with pattern "event/[a-z0-9]"
-			And publisher D listens to an event with pattern "event/.*"
+		When publisher A listens to an event with pattern "events/[a-z0-9]"
+			And publisher D listens to an event with pattern "events/.*"
 
-		When publisher A accepts an event match "event/1" for pattern "event/[a-z0-9]"
-			And subscriber 1 subscribes to an event "event/1"
-		Then publisher A receives 1 event match "event/1" for pattern "event/[a-z0-9]"
-		Then publisher D receives 0 event match "event/1" for pattern "event/.*"
+		When publisher A accepts an event match "events/1" for pattern "events/[a-z0-9]"
+			And subscriber 1 subscribes to an event "events/1"
+		Then publisher A receives 1 event match "events/1" for pattern "events/[a-z0-9]"
+		Then publisher D receives 0 event match "events/1" for pattern "events/.*"
 
-		When publisher A rejects an event match "event/2" for pattern "event/[a-z0-9]"
-			And publisher D accepts an event match "event/2" for pattern "event/.*"
-			And subscriber 3 subscribes to an event "event/2"
-		Then publisher A receives 0 event match "event/2" for pattern "event/[a-z0-9]"
-		Then publisher D receives 1 event match "event/2" for pattern "event/.*"
+		When publisher D accepts an event match "events/2" for pattern "events/.*"
+			And subscriber 3 subscribes to an event "events/2"
+		Then publisher A receives 0 event match "events/2" for pattern "events/[a-z0-9]"
+			And publisher D receives 1 event match "events/2" for pattern "events/.*"
 
 		When publisher C listens to an event with pattern "another-event"
 			And publisher C accepts an event match "another-event" for pattern "another-event"
@@ -51,8 +49,7 @@ Feature: Event Listening
 		Then publisher C receives at least one "CONNECTION" error "CONNECTION_ERROR"
       		And subscriber 2 receives at least one "CONNECTION" error "CONNECTION_ERROR"
 
-		# This requires message connectors to disconnect properly to pass
-		#Then publisher C receives 3 event matches "another-event" for pattern "another-event"
+		Then publisher C receives 3 event matches "another-event" for pattern "another-event"
 
 	Scenario: A publisher which accepts two times to a pattern
 
