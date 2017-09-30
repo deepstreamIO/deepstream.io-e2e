@@ -13,30 +13,6 @@ Feature: Event Listening
 			And subscriber 2 connects and logs into server 2
 			And subscriber 3 connects and logs into server 3
 
-	Scenario: Provider that is also a subscriber on a single node
-		When publisher A listens to an event with pattern "event/.*"
-			And publisher A accepts an event match "event/1" for pattern "event/.*"
-			And subscriber 1 subscribes to an event "event/1"
-
-		Then publisher A receives 1 event match "event/1" for pattern "event/.*"
-
-		When publisher A subscribes to an event "event/1"
-			And subscriber 1 unsubscribes from an event "event/1"
-
-		Then publisher A removed 1 event match "event/1" for pattern "event/.*"
-
-	Scenario: Provider that is also a subscriber on a cluster
-		When publisher D listens to an event with pattern "event/.*"
-			And publisher D accepts an event match "event/1" for pattern "event/.*"
-			And subscriber 1 subscribes to an event "event/1"
-
-		Then publisher D receives 1 event match "event/1" for pattern "event/.*"
-
-		When publisher D subscribes to an event "event/1"
-			And subscriber 1 unsubscribes from an event "event/1"
-
-		Then publisher D removed 1 event match "event/1" for pattern "event/.*"
-
 	@cluster
 	Scenario: A long scenario that does lots of random stuff
 
