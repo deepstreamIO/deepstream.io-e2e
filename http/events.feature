@@ -65,17 +65,17 @@ Feature: Interacting with events via the http APIs
     Then client A's last response was a "SUCCESS"
       And client B's last response was a "FAILURE"
 
-  # Scenario: Asserts user roles using server data
-  #   Given client C authenticates with http server 2 with details {"username": "userA", "password": "abcdefgh"}
-  #     And client D authenticates with http server 2 with details {"username": "userB", "password": "123456789"}
-  #     And client W subscribes to an event "admin-publish"
+  Scenario: Asserts user roles using server data
+    Given client C authenticates with http server 2 with details {"username": "userA", "password": "abcdefgh"}
+      And client D authenticates with http server 2 with details {"username": "userB", "password": "123456789"}
+      And client W subscribes to an event "admin-publish"
 
-  #   When clients C,D queue an event "admin-publish"
-  #     And client C flushes their http queue
+    When clients C,D queue an event "admin-publish"
+      And client C flushes their http queue
 
-  #   Then client C's last response had an "event" error matching "message denied"
-  #     And client W receives no event "admin-publish"
+    Then client C's last response had an "event" error matching "message denied"
+      And client W receives no event "admin-publish"
 
-  #   When client D flushes their http queue
-  #   Then client D's last response was a "SUCCESS"
-  #     And client W receives the event "admin-publish"
+    When client D flushes their http queue
+    Then client D's last response was a "SUCCESS"
+      And client W receives the event "admin-publish"
