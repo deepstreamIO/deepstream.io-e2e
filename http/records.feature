@@ -118,7 +118,7 @@ Feature: Interact with records via the HTTP APIs
     When client B queues a fetch for record "forbidden"
       And client B flushes their http queue
 
-    Then client B's last response had a "record" error matching "message denied.*snapshot"
+    Then client B's last response had a "record" error matching "message denied.*read"
 
   Scenario: Creating a record with fully-restricted permissions
     When client B queues a write to record "forbidden" with data '{"Alan":"Partridge"}'
