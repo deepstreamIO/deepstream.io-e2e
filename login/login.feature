@@ -1,4 +1,4 @@
-@login @wip
+@login
 Feature: Login and authorisation to deepstream
 
   Scenario: If a client logs in with correct details, success
