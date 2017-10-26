@@ -42,4 +42,4 @@ Feature: Login and authorisation to deepstream
 
     When client A attempts to login with username "userA" and password "abcdefgh"
       Then client A receives no login response
-      And client A receives "AUTH" error "ALREADY_AUTHENTICATED"
+      And client A receives "ERROR" error "ALREADY_AUTHENTICATED"
