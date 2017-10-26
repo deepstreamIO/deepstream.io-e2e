@@ -1,4 +1,4 @@
-@login
+@login @wip
 Feature: Login and authorisation to deepstream
 
   Scenario: If a client logs in with correct details, success
@@ -34,3 +34,12 @@ Feature: Login and authorisation to deepstream
     When client B logs in with username "userB" and password "123456789"
 
     Then client B receives an authenticated login response with data {"favorite color": "orange", "id": "userB" }
+
+  Scenario: Server sends already authenticated response if client tries to login been already authenticated
+    Given client A connects to server 1
+      And client A logs in with username "userA" and password "abcdefgh"
+      And client A receives an authenticated login response
+
+    When client A attempts to login with username "userA" and password "abcdefgh"
+      Then client A receives no login response
+      And client A receives "AUTH" error "ALREADY_AUTHENTICATED"
