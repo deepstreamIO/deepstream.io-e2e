@@ -1,7 +1,7 @@
 @login
 Feature: Login and authorisation to deepstream
 
-  Scenario: If a client logs in with correct details, success
+    Scenario: If a client logs in with correct details, success
     Given client A connects to server 1
 
     When client A logs in with username "userA" and password "abcdefgh"
@@ -13,7 +13,8 @@ Feature: Login and authorisation to deepstream
 
     When client A attempts to login with username "userA" and password "abcdefgh"
     Then client A receives no login response
-      And client A receives "ERROR" error "IS_CLOSED"
+      And client A receives "CONNECTION" error "IS_CLOSED"
+      And client A had a connection state change to "AUTHENTICATION_TIMEOUT"
 
   Scenario: If username is invalid, an error is thrown
     Given client A connects to server 1
@@ -22,11 +23,12 @@ Feature: Login and authorisation to deepstream
     Then client A receives an unauthenticated login response
 
     When client A logs in with username "doesnotexist" and password "abcdefgh"
-    Then client A is notified of too many login attempts
+      Then client A receives an unauthenticated login response
+      And client A is notified of too many login attempts
 
     When client A attempts to login with username "userA" and password "abcdefgh"
     Then client A receives no login response
-      And client A receives "ERROR" error "IS_CLOSED"
+      And client A receives "CONNECTION" error "IS_CLOSED"
 
   Scenario: Client receives correct clientData upon successful login
     Given client B connects to server 1
