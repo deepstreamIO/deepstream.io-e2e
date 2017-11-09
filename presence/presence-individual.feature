@@ -11,7 +11,7 @@ Feature: Presence Individual
 
 		When clients "A,B,C" subscribes to presence events for "D"
 			And client D connects and logs into server 1
-		
+
 		Then clients "A,B,C" are notified that client "D" logged in
 
 	Scenario: Client is notified of logins from other servers

@@ -16,4 +16,4 @@ Feature: Presence Permissions
     When clients A,B queries for connected clients
       And a small amount of time passes
     Then client B is notified that clients "A" are connected
-      And client A receives "PRESENCE" error "MESSAGE_DENIED"
+      And client A receives a "MESSAGE_DENIED" error on their query
