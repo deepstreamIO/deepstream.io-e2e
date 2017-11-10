@@ -14,13 +14,13 @@ Feature: Interacting with events via the http APIs
     Then client B's last response was a "SUCCESS" with length "5000"
       And client A eventually receives "5000" events "batch_event" with data { "x": "my_data" }
 
-  Scenario: emit many random messages
-    Given client A subscribes to the event "eventName"
-      And client A gets the record "recordName"
-      And client A provides the RPC "addTwo"
+  # Scenario: emit many random messages
+  #   Given client A subscribes to the event "eventName"
+  #     And client A gets the record "recordName"
+  #     And client A provides the RPC "addTwo"
 
-    When client B queues "100" random messages
-      And client B flushes their http queue
+  #   When client B queues "100" random messages
+  #     And client B flushes their http queue
 
-    Then client B's last response was a "SUCCESS" with length "100"
+  #   Then client B's last response was a "SUCCESS" with length "100"
 
