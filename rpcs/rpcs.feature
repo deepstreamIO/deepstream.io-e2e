@@ -26,6 +26,15 @@ Feature: RPC providing and calling on single + across multiple nodes
     Then client D receives a response for RPC "addTwo" with data "redrum"
       And client A's RPC "addTwo" is called once
 
+  Scenario: RPCs get rerouted after being rejected
+    Given client A provides the RPC "rejectOnce"
+      And client B provides the RPC "rejectOnce"
+
+    When client C calls the RPC "rejectOnce" with arguments { "numA": 1, "numB": 2 }
+      And client A's RPC "rejectOnce" is called once with data { "numA": 1, "numB": 2 }
+      And client B's RPC "rejectOnce" is called once with data { "numA": 1, "numB": 2 }
+      Then client C receives a response for RPC "rejectOnce" with data "ok"
+
   Scenario: When the only provider of an RPC rejects, give an error
     Given client A provides the RPC "alwaysReject"
 
