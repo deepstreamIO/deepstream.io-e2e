@@ -1,4 +1,4 @@
-@records
+@ignore
 Feature: Clients able to set data of a record without being subscribed to it
 
   Background:

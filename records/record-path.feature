@@ -1,4 +1,4 @@
-@records
+@ignore
 Feature: Record
 
   Background:
