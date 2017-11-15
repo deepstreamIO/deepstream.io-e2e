@@ -1,4 +1,4 @@
-@ignore
+@records
 Feature: Clients able to set data of a record without being subscribed to it
 
   Background:
@@ -16,10 +16,12 @@ Feature: Clients able to set data of a record without being subscribed to it
     Given client A sets the record "set-data-record" without being subscribed with path "user.firstname" and data 'John'
       Then clients B,C,D have record "set-data-record" with path "user.firstname" and data 'John'
 
-  Scenario: Clients able to use write acknowledgements without being subscribed
-    When client A sets the record "set-data-record" without being subscribed with data '{ "user": { "firstname": "Ben" } }' and requires write acknowledgement
-      Then client A is told that the record "set-data-record" was set without error
-      Then clients B,C,D have record "set-data-record" with path "user.firstname" and data 'Ben'
+  Scenario: Able to delete the path of a record when not subscribed
+    Given client A sets the record "set-data-record" without being subscribed with data '{ "user": { "firstname": "Alex" } }'
+      Then clients B,C,D have record "set-data-record" with data '{ "user": { "firstname": "Alex" } }'
+
+    When client A sets the record "set-data-record" without being subscribed with path "user.firstname" and data 'undefined'
+      Then clients B,C,D have record "set-data-record" with data '{ "user": {} }'
 
   Scenario: Record is created if it doesn't exist before write
     When client A sets the record "not-yet-existant" without being subscribed with data '{ "user": { "firstname": "Alex" } }'
@@ -36,3 +38,10 @@ Feature: Clients able to set data of a record without being subscribed to it
     When client A sets the record "double-write" without being subscribed with data '{ "user": { "firstname": "Alex" } }'
       And client A sets the record "double-write" without being subscribed with data '{ "user": { "firstname": "Ben" } }'
       Then client A received no errors
+
+  # Write acknowledgements
+
+  Scenario: Clients able to use write acknowledgements without being subscribed
+    When client A sets the record "set-data-record" without being subscribed with data '{ "user": { "firstname": "Ben" } }' and requires write acknowledgement
+      Then client A is told that the record "set-data-record" was set without error
+      Then clients B,C,D have record "set-data-record" with path "user.firstname" and data 'Ben'

@@ -65,7 +65,7 @@ Feature: Record
       And client A discards record "record"
       And a small amount of time passes
       Then client A gets notified of record "record" getting discarded
-@wip
+
   Scenario: Deletes a record
     When client A deletes record "record"
       And a small amount of time passes
