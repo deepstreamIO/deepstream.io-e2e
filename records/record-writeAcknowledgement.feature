@@ -1,4 +1,4 @@
-@ignore
+@records
 Feature: Record write acknowledgement
 
   Background:
