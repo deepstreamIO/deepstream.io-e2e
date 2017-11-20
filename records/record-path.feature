@@ -15,24 +15,15 @@ Feature: Record
     Then all clients have record "record" with path "user.firstname" and data 'null'
 
   Scenario: Setting a records leaf path to undefined deletes it
-    When client A sets the record "record" and path "user.firstname" with data 'undefined'
+    When client A erases the path "user.firstname" on record "record"
     Then all clients have record "record" with data '{ "user": {} }'
-
-  Scenario: Setting a leaf path to undefined deletes it
-    Given all clients subscribe to record "record"
-      And all clients subscribe to record "record" with path "user.firstname"
-
-    When client A sets the record "record" and path "user.firstname" with data 'Dave'
-
-    Then all clients receive an update for record "record" with data '{ "user": { "firstname": "Dave" } }'
-      And all clients receive an update for record "record" and path "user.firstname" with data 'Dave'
 
   Scenario: Setting a branch path to undefined deletes it
     Given client A sets the record "record" and path "objectToDelete" with data '{ "deleteMe": { "key": "value" } }'
       And all clients subscribe to record "record"
       And all clients subscribe to record "record" with path "objectToDelete"
 
-    When client A sets the record "record" and path "objectToDelete" with data 'undefined'
+    When client A erases the path "objectToDelete" on record "record"
 
     Then all clients receive an update for record "record" with data '{ "user": { "firstname": "John" } }'
       And all clients receive an update for record "record" and path "objectToDelete" with data 'undefined'
