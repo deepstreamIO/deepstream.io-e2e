@@ -8,7 +8,7 @@ Feature: Record HEAD
 
   Scenario: Returns error when record not found
     Given client A asks for the version of record "nonExistantRecord"
-      Then client A gets a head response for "nonExistantRecord" with error 'RECORD_NOT_FOUND'
+      Then client A gets told record "headRecord" has version -1
 
   Scenario: Local HEAD returns correct version
     Given client A asks for the version of record "headRecord"

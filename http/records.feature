@@ -6,7 +6,6 @@ Feature: Interact with records via the HTTP APIs
       And client A connects and logs into server 1
       And client B authenticates with http server 2
 
-
   Scenario: Getting a record
     Given client A gets the record "some-record"
       And client A sets the record "some-record" with data '{ "name": "alex" }'
@@ -47,7 +46,6 @@ Feature: Interact with records via the HTTP APIs
       And client B last response was a "PARTIAL_SUCCESS"
       And client B last response had a success at index "0"
       And client B last response had a "record" error matching "Record update failed" at index "1"
-
 
   Scenario: Updating a record with a path
     Given client A gets the record "nested-record"
@@ -137,4 +135,4 @@ Feature: Interact with records via the HTTP APIs
     When client B queues a write to record "read-only" and path "user" with data 'Morty Smith'
       And client B flushes their http queue
 
-    Then client B's last response had a "record" error matching "message denied.*update"
+    Then client B's last response had a "record" error matching "message denied.*patch"

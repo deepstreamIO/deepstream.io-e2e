@@ -1,4 +1,4 @@
-@records @write-ack
+@records
 Feature: Record write acknowledgement
 
   Background:
@@ -17,17 +17,3 @@ Feature: Record write acknowledgement
     When client B sets the record "writeRecord" and path "user.firstname" with data 'Charlie'
     Then client B is told that the record "writeRecord" was set without error
     Then all clients have record "writeRecord" with path "user.firstname" and data 'Charlie'
-
-  @write-acks-unhappy @cluster
-  Scenario: Connection goes down and clients are notified of write failure immediately
-    Given server 1 goes down
-    When client A sets the record "writeRecord" and path "user.firstname" with data 'Jeff'
-      Then client A is told that the record "writeRecord" experienced error "Connection error: error updating record as connection was closed" while setting
-
-    When server 1 comes back up
-      And all clients have record "writeRecord" with path "user.firstname" and data 'Jeff'
-
-    Then client A receives at least one "CONNECTION" error "CONNECTION_ERROR"
-      And client B receives at least one "CONNECTION" error "CONNECTION_ERROR"
-
-

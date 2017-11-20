@@ -43,7 +43,7 @@ Feature: Record
 
     Then all clients don't receive an update for record "record" and path "pets[2]"
 
-  Scenario: Subscribes and Discards
+  Scenario: Subscribes are not sent out immediately and clients continue to recieve data
     Given all clients subscribe to record "record" with path "city"
 
     When client A sets the record "record" and path "city" with data 'Berlin'
@@ -51,20 +51,24 @@ Feature: Record
 
     When client A discards record "record"
       And client B sets the record "record" and path "city" with data 'Dresden'
+      Then client A has record "record" with path "city" and data 'Dresden'
 
-    Then client A has record "record" with path "city" and data 'Berlin'
+    When a small amount of time passes
+      And client B sets the record "record" and path "city" with data 'Hamburg'
+      Then client A has record "record" with path "city" and data 'Dresden'
 
   Scenario: Creates and discards twice in a row
     When client A discards record "record"
-      Then client A gets notified of record "record" getting discarded
+      Then client A is not notified of record "record" getting discarded
 
     When client A gets the record "record"
       And client A discards record "record"
+      And a small amount of time passes
       Then client A gets notified of record "record" getting discarded
 
   Scenario: Deletes a record
     When client A deletes record "record"
-
+      And a small amount of time passes
     Then all clients get notified of record "record" getting deleted
 
   Scenario: Deletes a record then creates it again
