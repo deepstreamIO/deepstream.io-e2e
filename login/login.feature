@@ -35,3 +35,4 @@ Feature: Login and authorisation to deepstream
     When client B logs in with username "userB" and password "123456789"
 
     Then client B receives an authenticated login response with data {"favorite color": "orange", "id": "userB" }
+     And client B's "clientDataChanged" callback was called once with { "favorite color": "orange", "id": "userB" }
