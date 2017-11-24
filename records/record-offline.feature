@@ -36,7 +36,6 @@ Feature: Record Connectivity
       And a small amount of time passes
       Then all clients have record "record" with path "user.firstname" and data 'Charlie'
 
-
   Scenario: Creating records and updating created records while offline
     When client A goes offline
       And client A gets the record "record-offline"
@@ -65,7 +64,7 @@ Feature: Record Connectivity
       And a small amount of time passes
       Then all clients have record "record" with path "user.firstname" and data 'Maria'
       And all clients receives at least one "CONNECTION" error "CONNECTION_ERROR"
-
+@wip
   Scenario: Discarding while offline
     When client A goes offline
     And a small amount of time passes
@@ -74,7 +73,7 @@ Feature: Record Connectivity
       And a small amount of time passes
       And client A comes back online
       And a small amount of time passes
-    Then all clients have record "record" with path "user.firstname" and data 'Joao'
+    Then client B,C,D have record "record" with path "user.firstname" and data 'John'
 
 @ignore
   Scenario: Deleting while offline
