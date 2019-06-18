@@ -8,12 +8,8 @@ Feature: RPC Connectivity
     Given client A connects and logs into server 1
       And client A provides the RPC "addTwo"
 
-    When server 1 goes down
-      And server 2 goes down
-      And server 3 goes down
-      And server 1 comes back up
-      And server 2 comes back up
-      And server 3 comes back up
+    When all servers go down
+      And all servers come back up
 
     When client B connects and logs into server 1
       And client C connects and logs into server 2
@@ -34,13 +30,9 @@ Feature: RPC Connectivity
     Given client A connects and logs into server 1
       And client A provides the RPC "addTwo"
 
-    When server 1 goes down
-      And server 2 goes down
-      And server 3 goes down
+    When all servers go down
       And client A unprovides the RPC "addTwo"
-      And server 1 comes back up
-      And server 2 comes back up
-      And server 3 comes back up
+      And all servers come back up
 
     When client B connects and logs into server 1
       And client C connects and logs into server 2

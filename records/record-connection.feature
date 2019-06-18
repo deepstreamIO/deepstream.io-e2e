@@ -14,15 +14,12 @@ Feature: Record Connectivity
 
     Then all clients have record "record" with path "user.firstname" and data 'Bob'
 
-    When server 1 goes down
-      And server 2 goes down
-      And server 3 goes down
+    When all servers go down
 
     Then all clients have record "record" with path "user.firstname" and data 'Bob'
 
-    When server 1 comes back up
-      And server 2 comes back up
-      And server 3 comes back up
+    When all servers come back up
+
 
     Then all clients receive at least one "CONNECTION" error "CONNECTION_ERROR"
       And all clients have record "record" with path "user.firstname" and data 'Bob'

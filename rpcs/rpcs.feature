@@ -54,7 +54,7 @@ Feature: RPC providing and calling on single + across multiple nodes
       And client C's RPC "alwaysReject" is called once
       And client D's RPC "alwaysReject" is called once
 
-  Scenario: When the only provider of an RPC never responsds, give an error
+  Scenario: When the only provider of an RPC never responds, give an error
     Given client A provides the RPC "neverRespond"
 
     When client B calls the RPC "neverRespond" with arguments {}

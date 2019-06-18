@@ -16,12 +16,8 @@ Feature: Events Connectivity
   Scenario: All subscriptions should be resumed after servers restart
     Given all clients subscribe to an event "bob"
 
-    When server 1 goes down
-      And server 2 goes down
-      And server 3 goes down
-      And server 1 comes back up
-      And server 2 comes back up
-      And server 3 comes back up
+    When all servers go down
+      And all servers come back up
 
     Then all clients receive at least one "CONNECTION" error "CONNECTION_ERROR"
 

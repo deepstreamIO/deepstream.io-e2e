@@ -35,7 +35,7 @@ Feature: Interact with RPCs via the HTTP APIs
 
     Then client B's last response had an "rpc" error matching "no provider"
 
-  Scenario: When the only provider of an RPC never responsds, give an error
+  Scenario: When the only provider of an RPC never responds, give an error
     Given client A provides the RPC "neverRespond"
 
     When client B queues an RPC call to "neverRespond" with arguments {}

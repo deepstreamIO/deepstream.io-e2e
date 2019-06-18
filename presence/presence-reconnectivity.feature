@@ -8,12 +8,8 @@ Feature: Presence Connectivity
     Given client A connects and logs into server 1
         And client A subscribes to presence events
 
-    When server 1 goes down
-      And server 2 goes down
-      And server 3 goes down
-      And server 1 comes back up
-      And server 2 comes back up
-      And server 3 comes back up
+    When all servers go down
+      And all servers come back up
 
     When client B connects and logs into server 1
       And client C connects and logs into server 2
@@ -31,12 +27,8 @@ Feature: Presence Connectivity
     Given client A connects and logs into server 1
 		  And client A subscribes to presence events for "B,C,D"
 
-    When server 1 goes down
-      And server 2 goes down
-      And server 3 goes down
-      And server 1 comes back up
-      And server 2 comes back up
-      And server 3 comes back up
+    When all servers go down
+      And all servers come back up
 
     When client B connects and logs into server 1
       And client C connects and logs into server 2
@@ -54,13 +46,9 @@ Feature: Presence Connectivity
     Given client A connects and logs into server 1
 		  And client A subscribes to presence events for "B,C,D"
 
-    When server 1 goes down
-      And server 2 goes down
-      And server 3 goes down
+    When all servers go down
 		  And client A unsubscribes to presence events for "B,C,D"
-      And server 1 comes back up
-      And server 2 comes back up
-      And server 3 comes back up
+      And all servers come back up
 
     When client B connects and logs into server 1
       And client C connects and logs into server 2
@@ -77,13 +65,9 @@ Feature: Presence Connectivity
   Scenario: Subscribing to individual users while offline works
     Given client A connects and logs into server 1
 
-    When server 1 goes down
-      And server 2 goes down
-      And server 3 goes down
+    When all servers go down
 		  And client A subscribes to presence events for "B,C,D"
-      And server 1 comes back up
-      And server 2 comes back up
-      And server 3 comes back up
+      And all servers come back up
 
     When client B connects and logs into server 1
       And client C connects and logs into server 2
@@ -101,13 +85,9 @@ Feature: Presence Connectivity
     Given client A connects and logs into server 1
 		  And client A subscribes to presence events
 
-    When server 1 goes down
-      And server 2 goes down
-      And server 3 goes down
+    When all servers go down
 		  And client A unsubscribes to presence events
-      And server 1 comes back up
-      And server 2 comes back up
-      And server 3 comes back up
+      And all servers come back up
 
     When client B connects and logs into server 1
       And client C connects and logs into server 2
@@ -124,13 +104,9 @@ Feature: Presence Connectivity
   Scenario: Subscribing to all users while offline works
     Given client A connects and logs into server 1
 
-    When server 1 goes down
-      And server 2 goes down
-      And server 3 goes down
+    When all servers go down
 		  And client A subscribes to presence events
-      And server 1 comes back up
-      And server 2 comes back up
-      And server 3 comes back up
+      And all servers come back up
 
     When client B connects and logs into server 1
       And client C connects and logs into server 2
