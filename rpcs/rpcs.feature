@@ -47,15 +47,13 @@ Feature: RPC providing and calling on single + across multiple nodes
     When client A calls the RPC "alwaysReject" with arguments { }
 
     Then client A receives a response for RPC "alwaysReject" with error "NO_RPC_PROVIDER"
-      And client A's RPC "alwaysReject" is called once
-      And client B's RPC "alwaysReject" is called once
-      And client C's RPC "alwaysReject" is called once
-      And client D's RPC "alwaysReject" is called once
+      And all clients RPC "alwaysReject" is called once
 
   Scenario: When the only provider of an RPC never responds, give an error
     Given client A provides the RPC "neverRespond"
 
     When client B calls the RPC "neverRespond" with arguments {}
+      And a small amount of time passes
 
     Then client B receives a response for RPC "neverRespond" with error "RESPONSE_TIMEOUT"
       And client A's RPC "neverRespond" is called once
