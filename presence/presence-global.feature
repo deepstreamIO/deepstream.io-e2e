@@ -5,13 +5,10 @@ Feature: Presence Global
 
 	Scenario: Multiple client's are notified of login from other server
 
-		Given client A connects and logs into server 1
-			And client B connects and logs into server 1
+		Given client "A,B" connects and logs into server 1
 			And client C connects and logs into server 2
 
-		Then client A subscribes to presence events
-			And client B subscribes to presence events
-			And client C subscribes to presence events
+		Then all clients subscribes to presence events
 
 		When client D connects and logs into server 1
 			Then clients "A,B,C" are notified that client "D" logged in

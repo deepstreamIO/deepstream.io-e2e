@@ -24,7 +24,6 @@ Feature: Events Connectivity
     When client A publishes an event "bob"
     Then all clients receive the event "bob"
 
-  @cluster
   Scenario: Server restarts
     Given all clients subscribe to an event "eve"
 
@@ -40,7 +39,7 @@ Feature: Events Connectivity
       And client D receives no event "eve"
 
     When server 1 comes back up
-
+  
     Then client A receives at least one "CONNECTION" error "CONNECTION_ERROR"
       And client B receives at least one "CONNECTION" error "CONNECTION_ERROR"
       And client C receives the event "eve"

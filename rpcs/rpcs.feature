@@ -2,8 +2,7 @@
 Feature: RPC providing and calling on single + across multiple nodes
 
   Background:
-    Given client A connects and logs into server 1
-      And client B connects and logs into server 1
+    Given client "A,B" connects and logs into server 1
       And client C connects and logs into server 2
       And client D connects and logs into server 3
 
@@ -27,8 +26,7 @@ Feature: RPC providing and calling on single + across multiple nodes
       And client A's RPC "addTwo" is called once
 
   Scenario: RPCs get rerouted after being rejected
-    Given client A provides the RPC "rejectOnce"
-      And client B provides the RPC "rejectOnce"
+    Given client "A,B" provides the RPC "rejectOnce"
 
     When client C calls the RPC "rejectOnce" with arguments { "numA": 1, "numB": 2 }
       And client A's RPC "rejectOnce" is called once with data { "numA": 1, "numB": 2 }
@@ -62,7 +60,6 @@ Feature: RPC providing and calling on single + across multiple nodes
     Then client B receives a response for RPC "neverRespond" with error "RESPONSE_TIMEOUT"
       And client A's RPC "neverRespond" is called once
 
-  @cluster
   Scenario: When local and remote providers exist, the local one is chosen
     Given client B provides the RPC "addTwo"
       And client C provides the RPC "addTwo"
@@ -75,7 +72,6 @@ Feature: RPC providing and calling on single + across multiple nodes
       And client C's RPC "addTwo" is never called
       And client D's RPC "addTwo" is never called
 
-  @cluster
   Scenario: When a local provider rejects an RPC but a remote provider exists, the RPC is rerouted
     Given client B provides the RPC "clientBRejects"
       And client C provides the RPC "clientBRejects"
