@@ -5,6 +5,7 @@ Feature: Interact with records via the HTTP APIs
     Given "complex" permissions are used
       And client A connects and logs into server 1
       And client B authenticates with http server 2
+      And client C authenticates with http server 2
 
   Scenario: Getting a record
     Given client A gets the record "some-record"
@@ -64,7 +65,6 @@ Feature: Interact with records via the HTTP APIs
       And client B flushes their http queue
 
     Then client A gets notified of record "delete-record" getting deleted
-
 
   Scenario: Getting the HEAD of a record
     Given client A gets the record "versioned-record"
@@ -136,3 +136,45 @@ Feature: Interact with records via the HTTP APIs
       And client B flushes their http queue
 
     Then client B's last response had a "record" error matching "message denied.*patch"
+
+  Scenario: Notifying a record has changed outside of deepstream
+    Given client A gets the record "non-deepstream-updated-record"
+      And client A has record "non-deepstream-updated-record" with data '{}'
+    
+    When storage remote updates 'non-deepstream-updated-record' to '{ remoteChange: true }' with version 5
+    When client B queues a notify for records 'non-deepstream-updated-record'
+      And client B flushes their http queue
+
+    Then client A has record "non-deepstream-updated-record" with data '{ remoteChange: true }'
+
+  Scenario: Notifying a record has changed outside of deepstream without permissions
+    Given client A gets the record "non-deepstream-updated-record-without-permissions"
+      And client A has record "non-deepstream-updated-record-without-permissions" with data '{}'
+    
+    When storage remote updates 'non-deepstream-updated-record-without-permissions' to '{ remoteChange: true }' with version 5
+    When client C queues a notify for records 'non-deepstream-updated-record-without-permissions'
+      And client C flushes their http queue
+
+    Then client C's last response had a "record" error matching "message denied.*notify"
+      And client A has record "non-deepstream-updated-record-without-permissions" with data '{}'
+
+  Scenario: Notifying a record has been deleted outside of deepstream
+    Given client A gets the record "non-deepstream-deleted-record"
+      And client A sets the record "non-deepstream-deleted-record" with data '{ "name": "alex" }'
+    
+    When storage remote deletes 'non-deepstream-deleted-record'
+    When client B queues a notify for records 'non-deepstream-deleted-record'
+      And client B flushes their http queue
+
+    Then client A gets notified of record "non-deepstream-deleted-record" getting deleted
+
+  Scenario: Notifying a record has been deleted outside of deepstream without permissions
+    Given client A gets the record "non-deepstream-deleted-record-without-permissions"
+      And client A sets the record "non-deepstream-deleted-record-without-permissions" with data '{ "name": "alex" }'
+
+    When storage remote deletes 'non-deepstream-deleted-record-without-permissions'
+    When client C queues a notify for records 'non-deepstream-deleted-record-without-permissions'
+      And client C flushes their http queue
+
+    Then client C's last response had a "record" error matching "message denied.*notify"
+      And client A is not notified of record "non-deepstream-deleted-record-without-permissions" getting deleted
