@@ -48,6 +48,15 @@ Feature: Interact with records via the HTTP APIs
       And client B last response had a success at index "0"
       And client B last response had a "record" error matching "Record update failed" at index "1"
 
+  Scenario: Invalid version
+    Given client A gets the record "rec"
+      And client B sends the data { "token": "letmein", "body": [ { "topic": "record", "recordName": "rec", "action": "write", "data": { "a": "b" } }, { "topic": "record", "recordName": "rec", "action": "write", "data": { "a": "b" }, "version": 100 } ] }
+
+    Then client A has record "rec" with data '{ "a": "b" }'
+      And client B last response was a "PARTIAL_SUCCESS"
+      And client B last response had a success at index "0"
+      And client B last response had a "record" error matching "is not valid for record" at index "1"
+
   Scenario: Updating a record with a path
     Given client A gets the record "nested-record"
       And client A sets the record "nested-record" with data '{ "user": { "firstName": "Morty", "lastName": "Smith" } }'
