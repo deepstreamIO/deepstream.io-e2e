@@ -43,6 +43,7 @@ Feature: Record
 
     Then all clients don't receive an update for record "record" and path "pets[2]"
 
+  @V4
   Scenario: Subscribes are not sent out immediately and clients continue to recieve data
     Given all clients subscribe to record "record" with path "city"
 

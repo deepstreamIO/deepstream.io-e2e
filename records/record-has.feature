@@ -1,4 +1,4 @@
-@records
+@records @V4
 Feature: Record Has
 
   Background:

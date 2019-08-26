@@ -13,7 +13,7 @@ Feature: Event publishing and subscribing
     When client B publishes an event "open/some-event" with data "someData"
     Then client A receives the event "open/some-event" with data "someData"
 
-  Scenario: Clients can be prevents from subscribing and publishing
+  Scenario: Clients can be prevented from subscribing and publishing
     Given client A subscribes to an event "forbidden/some-event"
     When client B publishes an event "forbidden/some-event" with data 44
 

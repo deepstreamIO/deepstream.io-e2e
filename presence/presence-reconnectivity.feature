@@ -76,9 +76,7 @@ Feature: Presence Connectivity
     Then client A receives at least one "CONNECTION" error "CONNECTION_ERROR"
 		  And client "A" is notified that clients "B,C,D" logged in
 
-    When client B logs out
-      And client C logs out
-      And client D logs out
+    When client B,C,D logs out
 		  Then client "A" is notified that clients "B,C,D" logged out
 
   Scenario: Unsubscribing to all users while offline works
