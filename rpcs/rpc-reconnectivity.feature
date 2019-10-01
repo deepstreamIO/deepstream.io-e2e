@@ -55,7 +55,7 @@ Feature: RPC Connectivity
     Given client A connects and logs into server 1
       And client A provides the RPC "addTwo"
 
-    When server 2 comes back up
+    And all servers come back up
       And client B connects and logs into server 2
 
     When client B calls the RPC "addTwo" with arguments { "numA": 3, "numB": 7 }
