@@ -42,3 +42,11 @@ Feature: Interact with RPCs via the HTTP APIs
       And client B flushes their http queue
 
     Then client B's last response had an "rpc" error matching "response timeout"
+
+  Scenario: When the provider of an RPC errors, give an error
+    Given client A provides the RPC "alwaysError"
+
+    When client B queues an RPC call to "alwaysError" with arguments {}
+      And client B flushes their http queue
+
+    Then client B's last response had an "rpc" error matching "always errors"
