@@ -47,3 +47,16 @@ Feature: RPC Connectivity
       Then client D receives a response for RPC "addTwo" with error "NO_RPC_PROVIDER"
 
     Then client A receives at least one "CONNECTION" error "CONNECTION_ERROR"
+
+  Scenario: Subscriptions can be added before servers are added to the cluster
+    When all servers go down
+      And server 1 comes back up
+
+    Given client A connects and logs into server 1
+      And client A provides the RPC "addTwo"
+
+    When server 2 comes back up
+      And client B connects and logs into server 2
+
+    When client B calls the RPC "addTwo" with arguments { "numA": 3, "numB": 7 }
+    Then client B receives a response for RPC "addTwo" with data 10
