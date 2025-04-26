@@ -40,7 +40,7 @@ Feature: Record Connectivity
 
     Then client A receives at least one "CONNECTION" error "CONNECTION_ERROR"
       And client B receives at least one "CONNECTION" error "CONNECTION_ERROR"
-      And all clients have record "record" with path "user.firstname" and data 'Mike2'
+      And all clients have record "record" with path "user.firstname" and data 'John'
 
   #Flaky test
   #Scenario: Remote wins by default
